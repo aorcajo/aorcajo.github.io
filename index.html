@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  </head>
+  <body>
+    <py-script>
+      import js
+      import random
+
+      cities = {
+         "primera": "Madrid",
+         "segunda": "Zaragoza",
+         "tercera": "Valencia",
+         "cuarta": "Almeria",
+         "quinta": "Cáceres",
+         "sexta": "Málaga",
+         "séptima": "Alicante",
+         "décima": "Granada"
+      }
+
+      input_html = '''
+        <label for="{0}">{0}</label>
+        <input type="radio" name="city" id="{0}" value="{0}" />
+      '''
+
+      options = random.sample(list(cities.items()), 4)
+      anwser = options[0][1] # city
+      js.document.querySelector("span").innerText = f'Donde fue la {options[0][0]} PyConEs?'
+
+      random.shuffle(options)
+      for _,city in options:
+        js.document.querySelector("form").innerHTML += input_html.format(city)
+
+      def check_result():
+          player_answer = js.document.querySelector("input:checked")
+          if player_answer.value == anwser:
+            js.document.getElementById("hint").style.visibility = "visible"
+            js.document.getElementById("wrong_answer").style.visibility = "hidden"
+          else:
+            js.document.getElementById("wrong_answer").style.visibility = "visible"
+            js.document.getElementById("hint").style.visibility = "hidden"
+
+    </py-script>
+      <form>
+        <span></span>
+      </form>
+      <button py-click="check_result()">Contestar</button>
+
+      <span id="wrong_answer" style="visibility: hidden">No es la correcta :(</span>
+      <img id='hint' src="https://biancazapatka.com/wp-content/uploads/2017/08/img_2680.jpg" style="visibility: hidden"/>
+  </body>
+</html>
