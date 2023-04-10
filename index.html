@@ -20,8 +20,10 @@
       }
 
       input_html = '''
-        <label for="{0}">{0}</label>
-        <input type="radio" name="city" id="{0}" value="{0}" />
+      <div class="wrapper">
+      <input type="radio" name="city" id="{0}" value="{0}" />
+      <label for="{0}">{0}</label>
+      </div>
       '''
 
       options = random.sample(list(cities.items()), 4)
@@ -35,19 +37,69 @@
       def check_result():
           player_answer = js.document.querySelector("input:checked")
           if player_answer.value == anwser:
-            js.document.getElementById("hint").style.visibility = "visible"
-            js.document.getElementById("wrong_answer").style.visibility = "hidden"
+            js.document.getElementById("hint").style.display = "inherit"
+            js.document.getElementById("wrong_answer").style.display = "none"
+            js.document.getElementById("form-box").style.display = "none"
           else:
-            js.document.getElementById("wrong_answer").style.visibility = "visible"
-            js.document.getElementById("hint").style.visibility = "hidden"
+            js.document.getElementById("wrong_answer").style.display = "inherit"
+            js.document.getElementById("hint").style.display = "none"
 
     </py-script>
+    <div id="form-box">
       <form>
         <span></span>
       </form>
       <button py-click="check_result()">Contestar</button>
+      <span id="wrong_answer" style="display: none">No es la correcta :(</span>
+    </div>
 
-      <span id="wrong_answer" style="visibility: hidden">No es la correcta :(</span>
-      <img id='hint' src="https://biancazapatka.com/wp-content/uploads/2017/08/img_2680.jpg" style="visibility: hidden"/>
+    <img id='hint' src="https://biancazapatka.com/wp-content/uploads/2017/08/img_2680.jpg" style="display: none"/>
   </body>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    button {
+      margin: 24px;
+      border: none;
+      outline: none;
+      background-color: #f1f1f1;
+      padding: 0.5rem 1rem;
+      font-size: 18px;
+    }
+    #form-box {
+      padding: 16px;
+      margin: 3em auto 0 auto;
+      width: fit-content;
+      display: flex;
+      flex-direction: column;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: auto;
+    }
+    span {
+      font-size: 32px;
+    }
+    .wrapper {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+    }
+    label {
+      font-size: 32px;
+    }
+    #wrong_answer {
+      color: red;
+      text-align: center;
+    }
+    img {
+      height: 100%;
+      margin: auto;
+    }
+  </style>
 </html>
